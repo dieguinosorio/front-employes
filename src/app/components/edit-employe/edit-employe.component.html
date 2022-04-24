@@ -1,0 +1,106 @@
+<div class="fondo-modal animated fadeIn fast" [class.modal-oculto]="modalService.modalEditHide">
+    <!-- Modal -->
+    <div class="modal fade show" id="exampleModal" style="display: block;" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">{{title}}</h5>
+                    <button type="button" class="btn-close" aria-label="Close" (click)="closeModal()"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal m-t-40" autocomplete="off" [formGroup]="editForm" (ngSubmit)="updateEmploye()">
+                        <div class="form-group">
+                            <label>Primer Apellido</label>
+                            <input type="text" class="form-control" formControlName="surname" placeholder="Ingresar...">
+                            <div *ngIf="f.surname.touched && f.surname.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.surname.errors?.required">Primer Apellido es requerido.</div>
+                                <div *ngIf="f.surname.errors?.minlength">Primer Apellido debe tener al menos 3 caracteres.</div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Segundo Apellido</label>
+                            <input type="text" class="form-control" formControlName="second_surname" placeholder="Ingresar...">
+                            <div *ngIf="f.second_surname.touched && f.second_surname.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.second_surname.errors?.required">Segundo Apellido es requerido.</div>
+                                <div *ngIf="f.second_surname.errors?.minlength">Segundo Apellido debe tener al menos 3 caracteres.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Primer Nombre</label>
+                            <input type="text" class="form-control" formControlName="first_name" placeholder="Ingresar...">
+                            <div *ngIf="f.first_name.touched && f.first_name.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.first_name.errors?.required">Primer nombre es requerido.</div>
+                                <div *ngIf="f.first_name.errors?.minlength">Primer noombre debe tener al menos 3 caracteres.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Otros Nombres</label>
+                            <input type="text" class="form-control" formControlName="other_name" placeholder="Ingresar...">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Pais</label>
+                            <select class="form-control" formControlName="country">
+                              <option value="COL">Colombia</option>
+                              <option value="EU">EEUU</option>
+                            </select>
+                            <div *ngIf="f.country.touched && f.country.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.country.errors?.required">El pais del empleo es requerido.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Tipo Identificación</label>
+                            <select class="form-control" formControlName="type_id">
+                              <option value="CC">Cédula Ciudadanía</option>
+                              <option value="CE">Cédula Extranjería</option>
+                              <option value="PP">Pasaporte</option>
+                              <option value="PE">Permiso Especial</option>
+                            </select>
+                            <div *ngIf="f.type_id.touched && f.type_id.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.type_id.errors?.required">El tipo de indentificación es requerido.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label># Identificación</label>
+                            <input type="text" class="form-control" formControlName="nro_id" placeholder="Ingresar...">
+                            <div *ngIf="f.nro_id.touched && f.nro_id.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.nro_id.errors?.required"># Identificación es requerido.</div>
+                                <div *ngIf="f.nro_id.errors?.minlength"># Identificación debe tener al menos 3 caracteres.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Fecha Ingreso</label>
+                            <input type="date" class="form-control" formControlName="date_entry" id="start" name="trip-start">
+                            <div *ngIf="f.date_entry.touched && f.date_entry.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.date_entry.errors?.required">Fecha Ingreso es requerido.</div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Área</label>
+                            <select class="form-control" formControlName="department">
+                              <option *ngFor="let area of modalService.departaments"  [ngValue]="area.id" >{{area.name}}</option>
+                            </select>
+                            <div *ngIf="f.department.touched && f.department.invalid || !formInvalid" class="text-alert">
+                                <div *ngIf="f.department.errors?.required">Área es requerido.</div>
+                            </div>
+                        </div>
+                        <div class="alert alert-danger" *ngIf="errorsBack.length">
+                            <p *ngFor="let err of errorsBack">{{err}}</p>
+                        </div>
+                        <hr>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-success">Editar</button>&nbsp;
+                            <button type="button" class="btn btn-secondary" (click)="closeModal()">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,96 @@
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body text-center">
+                <h2>Administración de Empleados</h2>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row animated fadeIn fast">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <select [(ngModel)]="criteriaFilter" class="form-control">
+                          <option *ngFor="let criteria of getCriterias" [ngValue]="criteria.value">{{criteria.name}}</option>
+                        </select>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Ingrese un criterio de busqueda..." (keyup)="searchEmploye(filter.value)" #filter aria-label="Text input with dropdown button">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated fadeIn fast" *ngIf="loadData">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="alert alert-info text-center">
+                    <h4 class="alert-heading">Cargando...</h4>
+                    <i class="fa fa-spin fa-refresh fa-2x"></i>
+                    <p class="mb-0">Por favor espere</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Empleados</h4>
+                <h6>Total de empleados {{totalEmployes}}</h6>
+                <app-new-employe (created)="finishCreated()"></app-new-employe>
+                <app-edit-employe *ngIf="employedEdit" (closed)="finishEdit()"></app-edit-employe>
+                <hr>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead class="bg-primary">
+                            <tr>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Pais Empleo</th>
+                                <th>Tipo ID</th>
+                                <th># ID</th>
+                                <th>Email</th>
+                                <th>Fecha Ingreso</th>
+                                <th>Área</th>
+                                <th>Estado</th>
+                                <th>Fecha Registro</th>
+                                <th class="text-nowrap w100">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let employe of employes">
+                                <td>{{employe.getNames}}</td>
+                                <td>{{employe.getSurNames}}</td>
+                                <td>{{employe.country}}</td>
+                                <td>{{employe.type_id}}</td>
+                                <td>{{employe.nro_id}}</td>
+                                <td>{{employe.email}}</td>
+                                <td>{{employe.dateEntry}}</td>
+                                <td>{{employe.getDepartament}}</td>
+                                <td>
+                                    <span *ngIf="employe.state" class="label label-success">Activo</span>
+                                    <span *ngIf="!employe.state" class="label label-warning">Inactivo</span>
+                                </td>
+                                <td>{{employe.dateRegister}}</td>
+                                <td class="text-nowrap">
+                                    <a class="cursor" data-toggle="tooltip" data-original-title="Edit" (click)="editEmploye(employe)"> <i class="fa-solid fa-edit"></i> </a> &nbsp;
+                                    <a class="cursor" data-toggle="tooltip" data-original-title="Delete" (click)="deleteEmployed(employe.id,employe.first_name)"> <i class="fa-solid fa-ban"></i> </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="!filter.value">
+                    <button class="btn btn-secondary" (click)="changePage(-5)">Anterior</button> &nbsp;
+                    <button class="btn btn-secondary" (click)="changePage(5)">Siguiente</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
